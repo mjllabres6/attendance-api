@@ -3,7 +3,7 @@
 ## Introduction
 
 ## Problem Statement
-The hassle of going through attendance roll calls is extracting a toll in the time allocation for classes mostly. The time consumed in these roll calls could have been used in a more important matter regarding the class. This could also be tideous for the professors to handle having to call every single on of the students. Given a slight computation of the time wasted in these roll calls, let's say there are 15 meetings per semester in a subject and 15 mins consumed in attendance checks. It is already almost 4 hours worth of class allocated for those attendance checks. 
+The hassle of going through attendance roll calls is extracting a toll in the time allocation for classes mostly. The time consumed in these roll calls could have been used in a more important matter regarding the class. This could also be tideous for the professors to handle having to call every single on of the students. Another problem that aligns with this sentiment is how efficient the productivity in a class is, given the amount of time allocated for each class. Without proper solutions to address these problems, there will be continous repetitions of these problems in classes.
 
 ## Significance
 To the students, they will benefit with the higher amount of time allocated for teaching. This time efficiency is thanks to the solution of having innovative app that would handle the attendance work among the student-professor relation.
