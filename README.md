@@ -9,7 +9,6 @@ The hassle of going through attendance roll calls is extracting a toll in the ti
 To the students, they will benefit with the higher amount of time allocated for teaching. This time efficiency is thanks to the solution of having innovative app that would handle the attendance work among the student-professor relation.
 
 To the professors, it will be beneficial to them due to the fact that they can allocate more time into their teaching and less time in having these attendance checks which could have been translated into more interactions with the class. With this modern solution, it also gives them the benefit of not doing the sheet work of recording the attendance, given the app has the feature to export attendance CSVs.
-## Methods
 
 ## Expected Output
 
