@@ -22,5 +22,7 @@ Verifying students’ attendance through QR codes are much easier and flexible i
 
 # Contributors
 
+- John Azer Asi
 - Mary Joyce O. Llabres
-- Jeanela Myca Molino
+- Jeanela Myca H. Molino
+- Hardeep Sandhu
