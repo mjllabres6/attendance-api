@@ -10,7 +10,7 @@ Professors may encounter productivity issues with their classes due to several r
 
 
 ## Significance
-To the students, they will benefit with the higher amount of time allocated for teaching. This time efficiency is thanks to the solution of having innovative app that would handle the attendance work among the student-professor relation.
+To the students, they will benefit with the higher amount of time given to studying rather than having the extra minutes spent in attendance check. With this change, not only it is a better alternative to traditional roll calls, it also gives them an overview of their attendance on their own rather than just relying on the professor's record.
 
 To the professors, it will be beneficial to them due to the fact that they can allocate more time into their teaching and less time in having these attendance checks which could have been translated into more interactions with the class. With this modern solution, it also gives them the benefit of not doing the sheet work of recording the attendance, given the app has the feature to export attendance CSVs.
 
