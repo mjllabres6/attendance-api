@@ -9,6 +9,27 @@ from io import BytesIO
 
 class ClassManager(object):
     @classmethod
+    def create_class(cls, body):
+        code = str(uuid.uuid4())
+        subject_body = {
+            "subject_id": body.get("subject_id"),
+            "duration": body.get("duration"),
+        }
+
+        expiry = datetime.now() + timedelta(hours=int(subject_body.pop("duration")))
+
+        subject_body.update(
+            {"code": code, "expires_at": expiry}
+        )
+
+        try:
+            db.classes.insert_one(subject_body)
+            return {"code": code}
+        except Exception:
+            return {"message": "There was a problem creating the class."}
+
+
+    @classmethod
     def produce_qr(cls, id):
 
         buffer = BytesIO()
@@ -28,25 +49,3 @@ class ClassManager(object):
         for student in data:
             student["_id"] = str(student["_id"])
         return jsonify({"data": data})
-
-    @classmethod
-    def create_class(cls, body):
-        code = str(uuid.uuid4())
-        subject_body = {
-            "subject_id": body.get("subject_id"),
-            "duration": body.get("duration"),
-        }
-
-        expiry = datetime.now() + timedelta(hours=int(subject_body.pop("duration")))
-        print(str(expiry)[:-3])
-
-        subject_body.update(
-            {"code": code, "is_active": True, "expires_at": str(expiry)[:-3]}
-        )
-
-        try:
-            db.classes.insert_one(subject_body)
-            return {"message": "Sucessfully created class."}
-        except Exception as e:
-            print(e)
-            return {"message": "There was a problem creating the class."}

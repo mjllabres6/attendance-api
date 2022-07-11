@@ -1,4 +1,4 @@
-from flask import make_response, request, Blueprint, send_file
+from flask import make_response, request, Blueprint, send_file, jsonify
 from app.classes.controllers import ClassManager
 
 module = Blueprint("classes", __name__)
@@ -6,7 +6,8 @@ module = Blueprint("classes", __name__)
 
 @module.route("/classes", methods=["POST"])
 def create_class():
-    res = ClassManager.create_class(request.form)
+    json_data = request.get_json(force=True) 
+    res = ClassManager.create_class(json_data)
     return make_response(res)
 
 
