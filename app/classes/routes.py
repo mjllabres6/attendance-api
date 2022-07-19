@@ -6,7 +6,7 @@ module = Blueprint("classes", __name__)
 
 @module.route("/classes", methods=["POST"])
 def create_class():
-    json_data = request.get_json(force=True) 
+    json_data = request.get_json(force=True)
     res = ClassManager.create_class(json_data)
     return make_response(res)
 

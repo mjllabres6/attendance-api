@@ -22,15 +22,25 @@ class StudentManager(object):
     @classmethod
     def create_student(cls, body):
         user_body = {
-            "sr-code": body.get("sr-code"),
+            "srcode": body.get("srcode"),
             "name": body.get("name"),
-            "subjects": body.get("subjects"),
-            "classes": body.get("classes"),
+            "password": body.get("password"),
         }
 
         try:
             db.students.insert_one(user_body)
             return {"message": "Sucessfully created student record."}
         except Exception as e:
-            print(e)
             return {"message": "There was a problem creating the student record."}
+
+    @classmethod
+    def login_student(cls, body):
+        user_body = {"srcode": body.get("srcode"), "password": body.get("password")}
+
+        student = db.students.find_one(
+            {"srcode": user_body["srcode"], "password": user_body["password"]}
+        )
+        if student:
+            return {"message": "Found a match on a student record."}
+
+        return {"message": "Invalid login credentials."}

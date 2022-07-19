@@ -4,6 +4,7 @@ import json
 from bson.objectid import ObjectId
 from flask import jsonify
 
+
 class SubjectManager(object):
     @classmethod
     def create_subject(cls, body):
@@ -24,4 +25,3 @@ class SubjectManager(object):
         for subject in data:
             subject["_id"] = str(subject["_id"])
         return jsonify({"data": data})
-

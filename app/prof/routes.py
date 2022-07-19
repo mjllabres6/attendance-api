@@ -24,3 +24,9 @@ def get_prof_by_id(id):
 def get_subjects_by_prof(id):
     res = SubjectManager.get_subject_by_prof(id)
     return make_response(res)
+
+
+@module.route("/prof/login", methods=["POST"])
+def login_prof():
+    res = ProfManager.login_prof(request.form)
+    return make_response(res)

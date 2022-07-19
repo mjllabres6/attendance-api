@@ -18,16 +18,13 @@ class ClassManager(object):
 
         expiry = datetime.now() + timedelta(hours=int(subject_body.pop("duration")))
 
-        subject_body.update(
-            {"code": code, "expires_at": expiry}
-        )
+        subject_body.update({"code": code, "expires_at": expiry})
 
         try:
             db.classes.insert_one(subject_body)
             return {"code": code}
         except Exception:
             return {"message": "There was a problem creating the class."}
-
 
     @classmethod
     def produce_qr(cls, id):

@@ -22,3 +22,9 @@ def add_students():
 def get_student_by_id(id):
     res = StudentManager.get_student_by_id(id)
     return make_response(res)
+
+
+@module.route("/students/login", methods=["POST"])
+def login_student():
+    res = StudentManager.login_student(request.form)
+    return make_response(res)

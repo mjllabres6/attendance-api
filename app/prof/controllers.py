@@ -5,7 +5,6 @@ from bson.objectid import ObjectId
 
 
 class ProfManager(object):
-
     @classmethod
     def get_prof_by_id(cls, id):
         data = db.prof.find_one({"_id": ObjectId(id)})
@@ -16,6 +15,8 @@ class ProfManager(object):
     def create_prof(cls, body):
         prof_body = {
             "name": body.get("name"),
+            "prof_code": body.get("prof_code"),
+            "password": body.get("password"),
         }
 
         try:
@@ -24,3 +25,18 @@ class ProfManager(object):
         except Exception as e:
             print(e)
             return {"message": "There was a problem creating the prof record."}
+
+    @classmethod
+    def login_prof(cls, body):
+        prof_body = {
+            "prof_code": body.get("prof_code"),
+            "password": body.get("password"),
+        }
+
+        student = db.prof.find_one(
+            {"srcode": prof_body["srcode"], "password": prof_body["password"]}
+        )
+        if student:
+            return {"message": "Found a match on a student record."}
+
+        return {"message": "Invalid login credentials."}
