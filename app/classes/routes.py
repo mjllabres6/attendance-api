@@ -19,8 +19,8 @@ def get_class_qr(id):
     return send_file(res, mimetype="image/gif")
 
 
-@module.route("/classes/<code>", methods=["GET"])
+@module.route("/classes/<code>", methods=["POST"])
 def reg_qr(code):
 
-    res = ClassManager.register_attendance()
+    res = ClassManager.register_attendance(code, request.form)
     return make_response(res)

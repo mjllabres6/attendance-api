@@ -14,6 +14,7 @@ class ClassManager(object):
         subject_body = {
             "subject_id": body.get("subject_id"),
             "duration": body.get("duration"),
+            "created_at": datetime.today().strftime("%Y-%m-%d"),
         }
 
         expiry = datetime.now() + timedelta(hours=int(subject_body.pop("duration")))
@@ -37,8 +38,27 @@ class ClassManager(object):
         return buffer
 
     @classmethod
-    def register_attendance(cls):
-        return "sample"
+    def register_attendance(cls, code, body):
+        current_class = db.classes.find_one({"code": code})
+
+        if current_class:
+            if current_class["expires_at"] < datetime.now():
+                return {"message": "Class attendance has expired."}
+
+            attended = db.attendance.find_one(
+                {"class_code": code, "student_code": body.get("srcode")}
+            )
+            if attended:
+                return {"message": "You have already attended this class."}
+
+            db.attendance.insert_one(
+                {"class_code": code, "student_code": body.get("srcode")}
+            )
+            return {"message": "Class attendance has been registered"}
+
+        else:
+            print(current_class)
+            return {"message": "Invalid class code was scanned"}
 
     @classmethod
     def get_classes(cls):
