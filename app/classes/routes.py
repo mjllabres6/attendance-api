@@ -1,4 +1,4 @@
-from flask import make_response, request, Blueprint, send_file, jsonify
+from flask import make_response, request, Blueprint, send_file
 from app.classes.controllers import ClassManager
 
 module = Blueprint("classes", __name__)
@@ -21,6 +21,6 @@ def get_class_qr(id):
 
 @module.route("/classes/<code>", methods=["POST"])
 def reg_qr(code):
-
-    res = ClassManager.register_attendance(code, request.form)
+    json_data = request.get_json(force=True)
+    res = ClassManager.register_attendance(code, json_data)
     return make_response(res)

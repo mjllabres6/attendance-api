@@ -40,19 +40,18 @@ class ClassManager(object):
     @classmethod
     def register_attendance(cls, code, body):
         current_class = db.classes.find_one({"code": code})
-
         if current_class:
             if current_class["expires_at"] < datetime.now():
                 return {"message": "Class attendance has expired."}
 
             attended = db.attendance.find_one(
-                {"class_code": code, "student_code": body.get("srcode")}
+                {"class_code": code, "sr_code": body.get("srcode")}
             )
             if attended:
                 return {"message": "You have already attended this class."}
 
             db.attendance.insert_one(
-                {"class_code": code, "student_code": body.get("srcode")}
+                {"class_code": code, "sr_code": body.get("srcode")}
             )
             return {"message": "Class attendance has been registered"}
 

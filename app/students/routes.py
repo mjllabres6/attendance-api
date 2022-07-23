@@ -14,7 +14,8 @@ def get_students():
 
 @module.route("/students", methods=["POST"])
 def add_students():
-    response, status = StudentManager.create_student(request.form)
+    json_data = request.get_json(force=True)
+    response, status = StudentManager.create_student(json_data)
     return make_response(jsonify(response)), status
 
 
@@ -26,5 +27,6 @@ def get_student_by_id(id):
 
 @module.route("/students/login", methods=["POST"])
 def login_student():
-    res, status = StudentManager.login_student(request.form)
+    json_data = request.get_json(force=True)
+    res, status = StudentManager.login_student(json_data)
     return make_response(res), status

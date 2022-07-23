@@ -12,5 +12,3 @@ def register():
     app.register_blueprint(student_module, url_prefix="/attendance-api")
     app.register_blueprint(subject_module, url_prefix="/attendance-api")
     app.register_blueprint(prof_module, url_prefix="/attendance-api")
-
-    print(app.url_map)

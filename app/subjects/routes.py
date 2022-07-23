@@ -6,5 +6,6 @@ module = Blueprint("subjects", __name__)
 
 @module.route("/subjects", methods=["POST"])
 def create_subject():
-    res, status = SubjectManager.create_subject(request.form)
+    json_data = request.get_json(force=True)
+    res, status = SubjectManager.create_subject(json_data)
     return make_response(res), status
