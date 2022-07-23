@@ -2,6 +2,8 @@ from app import db
 import json
 from flask import jsonify
 from bson.objectid import ObjectId
+from http import HTTPStatus
+import pymongo
 
 
 class ProfManager(object):
@@ -21,10 +23,11 @@ class ProfManager(object):
 
         try:
             db.prof.insert_one(prof_body)
-            return {"message": "Sucessfully created prof record."}
-        except Exception as e:
-            print(e)
-            return {"message": "There was a problem creating the prof record."}
+            return {"message": "Successfully created prof record."}, 200
+        except pymongo.errors.DuplicateKeyError:
+            return {"message": "You have entered an existing prof code."}, 500
+        except Exception:
+            return {"message": "There was a problem creating prof record"}, 500
 
     @classmethod
     def login_prof(cls, body):
@@ -37,6 +40,6 @@ class ProfManager(object):
             {"srcode": prof_body["srcode"], "password": prof_body["password"]}
         )
         if student:
-            return {"message": "Found a match on a student record."}
+            return {"message": "Found a match on a student record."}, 200
 
-        return {"message": "Invalid login credentials."}
+        return {"message": "Invalid login credentials."}, 500

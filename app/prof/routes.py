@@ -10,8 +10,8 @@ module = Blueprint("prof", __name__)
 
 @module.route("/prof", methods=["POST"])
 def add_prof():
-    response = ProfManager.create_prof(request.form)
-    return make_response(jsonify(response))
+    response, status = ProfManager.create_prof(request.form)
+    return make_response(jsonify(response)), status
 
 
 @module.route("/prof/<id>", methods=["GET"])
@@ -28,5 +28,5 @@ def get_subjects_by_prof(id):
 
 @module.route("/prof/login", methods=["POST"])
 def login_prof():
-    res = ProfManager.login_prof(request.form)
-    return make_response(res)
+    res, status = ProfManager.login_prof(request.form)
+    return make_response(res), status

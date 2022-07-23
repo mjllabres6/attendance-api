@@ -3,6 +3,7 @@ from app import db
 import json
 from bson.objectid import ObjectId
 from flask import jsonify
+import pymongo
 
 
 class SubjectManager(object):
@@ -15,9 +16,11 @@ class SubjectManager(object):
 
         try:
             db.subjects.insert_one(subject_body)
-            return {"message": "Sucessfully created subject."}
-        except Exception as e:
-            return {"message": "There was a problem creating the subject."}
+            return {"message": "Successfully created subject."}, 200
+        except pymongo.errors.DuplicateKeyError:
+            return {"message": "You have entered an existing subject."}, 500
+        except Exception:
+            return {"message": "There was a problem creating subject record"}, 500
 
     @classmethod
     def get_subject_by_prof(cls, id):

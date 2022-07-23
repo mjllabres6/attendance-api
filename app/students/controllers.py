@@ -2,6 +2,8 @@ from app import db
 import json
 from flask import jsonify
 from bson.objectid import ObjectId
+from http import HTTPStatus
+import pymongo
 
 
 class StudentManager(object):
@@ -29,9 +31,11 @@ class StudentManager(object):
 
         try:
             db.students.insert_one(user_body)
-            return {"message": "Sucessfully created student record."}
-        except Exception as e:
-            return {"message": "There was a problem creating the student record."}
+            return {"message": "Successfully created student record."}, 200
+        except pymongo.errors.DuplicateKeyError:
+            return {"message": "You have entered an existing  sr-code."}, 500
+        except Exception:
+            return {"message": "There was a problem creating student record"}, 500
 
     @classmethod
     def login_student(cls, body):
@@ -41,6 +45,6 @@ class StudentManager(object):
             {"srcode": user_body["srcode"], "password": user_body["password"]}
         )
         if student:
-            return {"message": "Found a match on a student record."}
+            return {"message": "Found a match on a student record."}, 200
 
-        return {"message": "Invalid login credentials."}
+        return {"message": "Invalid login credentials."}, 500

@@ -14,6 +14,10 @@ except:
     print("An error has occurred while trying to connect to the database.")
 
 
+with app.app_context():
+    db.students.create_index([("srcode", pymongo.ASCENDING)], unique=True)
+    db.prof.create_index([("prof_code", pymongo.ASCENDING)], unique=True)
+
 module = Blueprint("/", __name__)
 
 
