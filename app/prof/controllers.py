@@ -25,9 +25,9 @@ class ProfManager(object):
             db.prof.insert_one(prof_body)
             return {"message": "Successfully created prof record."}, 200
         except pymongo.errors.DuplicateKeyError:
-            return {"message": "You have entered an existing prof code."}, 500
+            return {"message": "You have entered an existing prof code."}, 200
         except Exception:
-            return {"message": "There was a problem creating prof record"}, 500
+            return {"message": "There was a problem creating prof record"}, 200
 
     @classmethod
     def login_prof(cls, body):
@@ -36,10 +36,10 @@ class ProfManager(object):
             "password": body.get("password"),
         }
 
-        student = db.prof.find_one(
-            {"srcode": prof_body["srcode"], "password": prof_body["password"]}
+        prof = db.prof.find_one(
+            {"prof_code": prof_body["prof_code"], "password": prof_body["password"]}
         )
-        if student:
-            return {"message": "Found a match on a student record."}, 200
+        if prof:
+            return {"message": "Found a match on a prof record.", "name": prof["name"]}, 200
 
-        return {"message": "Invalid login credentials."}, 500
+        return {"message": "Invalid login credentials."}, 200

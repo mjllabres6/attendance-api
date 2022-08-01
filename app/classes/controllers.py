@@ -5,7 +5,9 @@ from flask import jsonify
 from app import db
 from datetime import datetime, timedelta
 from io import BytesIO
-
+import xlsxwriter
+from app.students.controllers import StudentManager
+import csv
 
 class ClassManager(object):
     @classmethod
@@ -45,18 +47,17 @@ class ClassManager(object):
                 return {"message": "Class attendance has expired."}
 
             attended = db.attendance.find_one(
-                {"class_code": code, "sr_code": body.get("srcode")}
+                {"class_code": code, "srcode": body.get("srcode")}
             )
             if attended:
                 return {"message": "You have already attended this class."}
 
             db.attendance.insert_one(
-                {"class_code": code, "sr_code": body.get("srcode")}
+                {"class_code": code, "srcode": body.get("srcode")}
             )
             return {"message": "Class attendance has been registered"}
 
         else:
-            print(current_class)
             return {"message": "Invalid class code was scanned"}
 
     @classmethod
@@ -65,3 +66,30 @@ class ClassManager(object):
         for student in data:
             student["_id"] = str(student["_id"])
         return jsonify({"data": data})
+    
+    @classmethod
+    def get_student_count(cls, code):
+        data = db.attendance.count_documents({"class_code": code})
+        return {"count": data}
+    
+    @classmethod
+    def export_as_excel(cls, code):
+        import io
+        data = list(db.attendance.find({"class_code": code}))
+        srcode = ""
+        name = ""
+
+        proxy = io.StringIO()
+        
+        writer = csv.writer(proxy)
+        writer.writerow(['SR-CODE', 'NAME'])
+
+        for student in data:
+            name = StudentManager.get_student_by_code(student["srcode"])["name"]
+            writer.writerow([student["srcode"], name])
+
+        mem = io.BytesIO()
+        mem.write(proxy.getvalue().encode())
+        mem.seek(0)
+        proxy.close()
+        return mem
