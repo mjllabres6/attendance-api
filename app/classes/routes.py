@@ -30,6 +30,16 @@ def get_student_count(code):
     res = ClassManager.get_student_count(code)
     return make_response(res)
 
+@module.route("/classes/<srcode>/attended", methods=["GET"])
+def get_student_attendance(srcode):
+    res = ClassManager.get_student_attendance(srcode)
+    return make_response(res)
+
+@module.route("/classes/<profcode>/conducted", methods=["GET"])
+def get_prof_classes(profcode):
+    res = ClassManager.get_prof_classes(profcode)
+    return make_response(res)
+
 @module.route("/classes/<code>/export", methods=["GET"])
 def export_as_excel(code):
     res = ClassManager.export_as_excel(code)
